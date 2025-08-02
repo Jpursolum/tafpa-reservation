@@ -15,13 +15,42 @@ class ReservationResource extends Resource
     protected static ?string $model = Reservation::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationLabel = 'Client Reservations'; // 👈 Bagong label para sa admin side
-    protected static ?string $navigationGroup = 'For Posting'; // 👈 Group under For Posting
+    protected static ?string $navigationLabel = 'Client Reservations';
+    protected static ?string $navigationGroup = 'For Posting';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('full_name')
+                    ->label('Full Name')
+                    ->required()
+                    ->disabled(),
+
+                Forms\Components\TextInput::make('guests')
+                    ->label('Number of Guests')
+                    ->numeric()
+                    ->minValue(1)
+                    ->disabled(),
+
+                Forms\Components\TextInput::make('address')
+                    ->label('Address')
+                    ->disabled(),
+
+                Forms\Components\TextInput::make('contact_number')
+                    ->label('Contact Number')
+                    ->tel()
+                    ->disabled(),
+
+                Forms\Components\TextInput::make('email')
+                    ->label('Email')
+                    ->email()
+                    ->disabled(),
+
+                Forms\Components\DatePicker::make('reserve_date')
+                    ->label('Reservation Date')
+                    ->disabled(),
+
                 Forms\Components\Select::make('status')
                     ->label('Reservation Status')
                     ->options([
@@ -56,7 +85,7 @@ class ReservationResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('reservation_date')
+                Tables\Columns\TextColumn::make('reserve_date')
                     ->label('Date')
                     ->date()
                     ->sortable(),
@@ -77,7 +106,7 @@ class ReservationResource extends Resource
                     ->height(100)
                     ->visibility('private'),
             ])
-            ->defaultSort('reservation_date', 'desc')
+            ->defaultSort('reserve_date', 'desc')
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

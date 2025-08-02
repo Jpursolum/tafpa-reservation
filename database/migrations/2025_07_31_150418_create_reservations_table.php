@@ -12,16 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reservations', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('user_id')->constrained()->onDelete('cascade');
-        $table->foreignId('cottage_id')->constrained()->onDelete('cascade');
-        $table->date('reservation_date');
-        $table->string('gcash_receipt')->nullable();
-        $table->enum('status', ['pending', 'approved', 'cancelled', 'paid'])->default('pending');
-        $table->text('notes')->nullable();
-        $table->timestamps();
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('cottage_id')->constrained()->onDelete('cascade');
+            $table->string('full_name');
+            $table->integer('guests');
+            $table->string('address');
+            $table->string('contact_number');
+            $table->string('email')->nullable();
+            $table->date('reserve_date');
+            $table->timestamps();
+});
 
-        });
     }
 
     /**
